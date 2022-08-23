@@ -15,6 +15,7 @@ const (
 	GasPriceOracle               = "0x420000000000000000000000000000000000000F"
 	L1Block                      = "0x4200000000000000000000000000000000000015"
 	GovernanceToken              = "0x4200000000000000000000000000000000000042"
+	ProxyAdmin                   = "0x4200000000000000000000000000000000000016"
 )
 
 var (
@@ -30,6 +31,7 @@ var (
 	GasPriceOracleAddr               = common.HexToAddress(GasPriceOracle)
 	L1BlockAddr                      = common.HexToAddress(L1Block)
 	GovernanceTokenAddr              = common.HexToAddress(GovernanceToken)
+	ProxyAdminAddr                   = common.HexToAddress(ProxyAdmin)
 
 	Predeploys = make(map[string]*common.Address)
 )
@@ -47,4 +49,5 @@ func init() {
 	Predeploys["GasPriceOracle"] = &GasPriceOracleAddr
 	Predeploys["L1Block"] = &L1BlockAddr
 	Predeploys["GovernanceToken"] = &GovernanceTokenAddr
+	Predeploys["ProxyAdmin"] = &ProxyAdminAddr
 }

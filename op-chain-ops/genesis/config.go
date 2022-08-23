@@ -158,5 +158,9 @@ func NewStorageConfig(hh *hardhat.Hardhat, config *DeployConfig, chain ethereum.
 		// TODO: this should be set to the MintManager
 		"_owner": common.Address{},
 	}
+	storage["ProxyAdmin"] = state.StorageValues{
+		// TODO: this needs to be configurable
+		"owner": common.Address{},
+	}
 	return storage, nil
 }

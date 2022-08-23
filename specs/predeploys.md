@@ -5,8 +5,8 @@
 **Table of Contents**
 
 - [Overview](#overview)
-- [OVM\_L2ToL1MessagePasser](#ovm%5C_l2tol1messagepasser)
-- [OVM\_DeployerWhitelist](#ovm%5C_deployerwhitelist)
+- [L2ToL1MessagePasser](#l2tol1messagepasser)
+- [DeployerWhitelist](#deployerwhitelist)
 - [OVM\_ETH](#ovm%5C_eth)
 - [WETH9](#weth9)
 - [L2CrossDomainMessenger](#l2crossdomainmessenger)
@@ -18,6 +18,7 @@
 - [Reserved System Address 1](#reserved-system-address-1)
 - [Reserved System Address 2](#reserved-system-address-2)
 - [L1Block](#l1block)
+- [ProxyAdmin](#proxyadmin)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -39,8 +40,8 @@ or `Bedrock`. Deprecated contracts should not be used.
 
 | Name                         | Address                                    | Introduced | Deprecated |
 | ---------------------------- | ------------------------------------------ | ---------- | ---------- |
-| OVM\_L2ToL1MessagePasser     | 0x4200000000000000000000000000000000000000 | Legacy     | No         |
-| OVM\_DeployerWhitelist       | 0x4200000000000000000000000000000000000002 | Legacy     | Yes        |
+| L2ToL1MessagePasser          | 0x4200000000000000000000000000000000000000 | Legacy     | No         |
+| DeployerWhitelist            | 0x4200000000000000000000000000000000000002 | Legacy     | Yes        |
 | OVM\_ETH                     | 0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000 | Legacy     | Yes        |
 | WETH9                        | 0x4200000000000000000000000000000000000006 | Legacy     | No         |
 | L2CrossDomainMessenger       | 0x4200000000000000000000000000000000000007 | Legacy     | No         |
@@ -48,12 +49,13 @@ or `Bedrock`. Deprecated contracts should not be used.
 | SequencerFeeVault            | 0x4200000000000000000000000000000000000011 | Legacy     | No         |
 | OptimismMintableERC20Factory | 0x4200000000000000000000000000000000000012 | Legacy     | No         |
 | L1BlockNumber                | 0x4200000000000000000000000000000000000013 | Legacy     | Yes        |
-| OVM\_GasPriceOracle          | 0x420000000000000000000000000000000000000F | Legacy     | No         |
+| GasPriceOracle               | 0x420000000000000000000000000000000000000F | Legacy     | No         |
 | Reserved System Address 1    | 0x4200000000000000000000000000000000000014 | Legacy     | No         |
 | Reserved System Address 2    | 0x4200000000000000000000000000000000000042 | Legacy     | No         |
 | L1Block                      | 0x4200000000000000000000000000000000000015 | Bedrock    | No         |
+| ProxyAdmin                   | 0x4200000000000000000000000000000000000016 | Bedrock    | No         |
 
-## OVM\_L2ToL1MessagePasser
+## L2ToL1MessagePasser
 
 The `OVM_L2ToL1MessagePasser` stores commitments to withdrawal transactions.
 When a user is submitting the withdrawing transaction on L1, they provide a
@@ -378,3 +380,9 @@ interface L1Block {
     ) external;
 }
 ```
+
+## ProxyAdmin
+
+The `ProxyAdmin` is the owner of all of the proxy contracts set at the
+predeploys. It is not behind a proxy itself. The owner of the `ProxyAdmin` will
+have the ability to upgrade any of the other predeploy contracts.

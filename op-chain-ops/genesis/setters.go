@@ -29,23 +29,22 @@ func SetProxies(hh *hardhat.Hardhat, db vm.StateDB) error {
 	if err != nil {
 		return err
 	}
-	proxyAdmin, err := hh.GetDeployment("ProxyAdmin")
-	if err != nil {
-		return err
-	}
+	proxyAdminSlot := predeploys.ProxyAdminAddr.Hash()
 
-	for i := uint64(0); i <= 2048; i++ {
+	for i := uint64(0); i < 2048; i++ {
 		bigAddr := new(big.Int).Or(bigPredeployNamespace, new(big.Int).SetUint64(i))
 		addr := common.BigToAddress(bigAddr)
 
-		// There is no proxy at the governance token address
-		if addr == predeploys.GovernanceTokenAddr {
+		// There is no proxy at the governance token address or
+		// the proxy admin address. LegacyERC20ETH lives in the
+		// 0xDead namespace so it can be ignored here
+		if addr == predeploys.GovernanceTokenAddr || addr == predeploys.ProxyAdminAddr {
 			continue
 		}
 
 		db.CreateAccount(addr)
 		db.SetCode(addr, proxy.DeployedBytecode)
-		db.SetState(addr, AdminSlot, proxyAdmin.Address.Hash())
+		db.SetState(addr, AdminSlot, proxyAdminSlot)
 	}
 	return nil
 }
@@ -73,6 +72,8 @@ func SetImplementations(hh *hardhat.Hardhat, db vm.StateDB, storage StorageConfi
 			addr = predeploys.GovernanceTokenAddr
 		case predeploys.LegacyERC20ETHAddr:
 			addr = predeploys.LegacyERC20ETHAddr
+		case predeploys.ProxyAdminAddr:
+			addr = predeploys.ProxyAdminAddr
 		default:
 			addr, err = AddressToCodeNamespace(*address)
 			if err != nil {

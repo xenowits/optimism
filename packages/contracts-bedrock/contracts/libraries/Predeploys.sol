@@ -65,4 +65,9 @@ library Predeploys {
      *         instead, which exposes more information about the L1 state.
      */
     address internal constant L1_BLOCK_NUMBER = 0x4200000000000000000000000000000000000013;
+
+    /**
+     * @notice Address of the ProxyAdmin predeploy.
+     */
+    address internal constant PROXY_ADMIN = 0x4200000000000000000000000000000000000016;
 }
