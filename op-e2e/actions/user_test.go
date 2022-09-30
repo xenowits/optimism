@@ -79,4 +79,22 @@ func TestCrossLayerUser(gt *testing.T) {
 	}
 	// Now that the L2 chain adopted the latest L1 block, check that we processed the deposit
 	alice.ActCheckDepositStatus(true, true)(t)
+
+	// regular withdrawal, in new L2 block
+	alice.ActStartWithdrawal(t)
+	seq.ActL2StartBlock(t)
+	seqEngine.ActL2IncludeTx(alice.Address())(t)
+	seq.ActL2EndBlock(t)
+	alice.ActCheckStartWithdrawal(true)(t)
+
+	// TODO: need to post L2 output tx, need proposer actor.
+	// TODO: make some empty L1 blocks for the withdrawal finalization period to expire
+	//// make the L1 side of the withdrawal tx
+	//alice.ActCompleteWithdrawal(t)
+	//// include completed withdrawal in new L1 block
+	//miner.ActL1StartBlock(12)(t)
+	//miner.ActL1IncludeTx(alice.Address())(t)
+	//miner.ActL1EndBlock(t)
+	//// check withdrawal succeeded
+	//alice.L1.ActCheckReceiptStatusOfLastTx(true)(t)
 }
